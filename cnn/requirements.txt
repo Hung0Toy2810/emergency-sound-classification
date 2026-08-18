@@ -1,0 +1,12 @@
+numpy
+pandas
+librosa
+soundfile
+noisereduce
+matplotlib
+scikit-learn
+tqdm
+torch
+torchvision
+Flask
+Pillow

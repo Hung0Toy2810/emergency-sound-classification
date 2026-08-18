@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundClassify — CNN vs Transformer</title>
+    <meta name="description" content="Demo so sánh SoundCNN và Audio Spectrogram Transformer cho phân loại âm thanh nguy hiểm">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header id="main-nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand" aria-label="SoundClassify home">
+                <span class="nav-icon">◉</span>
+                <span class="nav-title">SoundClassify</span>
+            </a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#metrics" class="nav-link">
+                    <span class="nav-link-icon">📊</span> Metrics
+                </a>
+                <a href="#predict" class="nav-link">
+                    <span class="nav-link-icon">🎯</span> Predict
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <!-- Decorative orbs -->
+            <div class="hero-orb hero-orb--cyan" aria-hidden="true"></div>
+            <div class="hero-orb hero-orb--purple" aria-hidden="true"></div>
+
+            <div class="hero-content">
+                <div class="hero-kicker">🔊 Audio Risk Detection</div>
+                <h1 id="hero-title">
+                    <span class="hero-title-gradient">CNN</span>
+                    <span class="hero-vs">vs</span>
+                    <span class="hero-title-gradient">AST</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload audio, xem spectrogram và so sánh kết quả dự đoán giữa
+                    <strong>SoundCNN</strong> và <strong>Audio Spectrogram Transformer</strong>
+                    cho 4 lớp âm thanh nguy hiểm.
+                </p>
+                <div class="hero-actions">
+                    <a class="hero-primary" href="#predict">🎯 Chạy demo</a>
+                    <a class="hero-secondary" href="#metrics">📊 Xem metrics</a>
+                </div>
+                <div class="hero-classes" aria-label="Supported classes">
+                    <span class="class-pill"><span class="pill-emoji">💥</span> Crash</span>
+                    <span class="class-pill"><span class="pill-emoji">🚨</span> Siren</span>
+                    <span class="class-pill"><span class="pill-emoji">😱</span> Scream</span>
+                    <span class="class-pill"><span class="pill-emoji">🔫</span> Gunshot</span>
+                </div>
+            </div>
+
+            <aside class="hero-panel glass" aria-label="Model summary">
+                <div class="panel-row">
+                    <span>Models</span>
+                    <strong>2</strong>
+                </div>
+                <div class="panel-row">
+                    <span>Classes</span>
+                    <strong>4</strong>
+                </div>
+                <div class="panel-row">
+                    <span>Device</span>
+                    <strong>CUDA / CPU</strong>
+                </div>
+                <div class="panel-row">
+                    <span>Mode</span>
+                    <strong>Side-by-side</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section id="metrics">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">📈 Evaluation</span>
+                    <h2>So sánh mô hình</h2>
+                    <p class="section-desc">Các chỉ số chính để trình bày nhanh khác biệt giữa CNN nhẹ và Transformer lớn hơn.</p>
+                </div>
+
+                <div class="model-overview-grid">
+                    <article class="model-card glass cnn-accent reveal">
+                        <div class="model-card-header">
+                            <div class="model-icon cnn-bg">CN</div>
+                            <div>
+                                <h3>SoundCNN</h3>
+                                <span class="arch-badge">5-layer CNN</span>
+                            </div>
+                        </div>
+                        <div class="model-big-stat">
+                            <span class="big-number" data-value="64">0</span><span class="big-unit">%</span>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="model-meta">
+                            <div class="meta-item"><span class="meta-label">Params</span><span class="meta-value">4.78M</span></div>
+                            <div class="meta-item"><span class="meta-label">Input</span><span class="meta-value">Mel 224²</span></div>
+                            <div class="meta-item"><span class="meta-label">Window</span><span class="meta-value">4 s</span></div>
+                        </div>
+                    </article>
+
+                    <article class="model-card glass ast-accent reveal">
+                        <div class="model-card-header">
+                            <div class="model-icon ast-bg">AT</div>
+                            <div>
+                                <h3>ViTAST</h3>
+                                <span class="arch-badge">Audio Spectrogram Transformer</span>
+                            </div>
+                        </div>
+                        <div class="model-big-stat">
+                            <span class="big-number" data-value="83.67">0</span><span class="big-unit">%</span>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="model-meta">
+                            <div class="meta-item"><span class="meta-label">Params</span><span class="meta-value">86.6M</span></div>
+                            <div class="meta-item"><span class="meta-label">Input</span><span class="meta-value">Log-Mel 128×998</span></div>
+                            <div class="meta-item"><span class="meta-label">Window</span><span class="meta-value">10 s</span></div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="metrics-table-wrapper glass reveal">
+                    <h3 class="table-title">Metrics tổng quan</h3>
+                    <table class="metrics-table" id="metricsTable">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th class="cnn-col">SoundCNN</th>
+                                <th class="ast-col">ViTAST</th>
+                                <th>Delta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Accuracy</td><td class="cnn-col">64.00%</td><td class="ast-col">83.67%</td><td class="diff positive">+19.67%</td></tr>
+                            <tr><td>Macro Precision</td><td class="cnn-col">66.00%</td><td class="ast-col">85.94%</td><td class="diff positive">+19.94%</td></tr>
+                            <tr><td>Macro Recall</td><td class="cnn-col">66.00%</td><td class="ast-col">84.03%</td><td class="diff positive">+18.03%</td></tr>
+                            <tr><td>Macro F1</td><td class="cnn-col">66.00%</td><td class="ast-col">84.69%</td><td class="diff positive">+18.69%</td></tr>
+                            <tr><td>mAP</td><td class="cnn-col na">N/A</td><td class="ast-col">92.04%</td><td class="diff">—</td></tr>
+                            <tr><td>ROC AUC</td><td class="cnn-col na">N/A</td><td class="ast-col">96.22%</td><td class="diff">—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="class-performance glass reveal">
+                    <h3 class="table-title">F1 theo từng lớp</h3>
+                    <div class="class-bars" id="classBars">
+                        <div class="class-bar-group">
+                            <div class="class-bar-label">💥 Crash_Collision</div>
+                            <div class="bar-pair">
+                                <div class="bar-row"><span class="bar-model-label">CNN</span><div class="bar-track"><div class="bar-fill cnn-fill" style="--target-width: 55%;"></div></div><span class="bar-value">55%</span></div>
+                                <div class="bar-row"><span class="bar-model-label">AST</span><div class="bar-track"><div class="bar-fill ast-fill" style="--target-width: 80%;"></div></div><span class="bar-value">80%</span></div>
+                            </div>
+                        </div>
+                        <div class="class-bar-group">
+                            <div class="class-bar-label">🚨 Siren</div>
+                            <div class="bar-pair">
+                                <div class="bar-row"><span class="bar-model-label">CNN</span><div class="bar-track"><div class="bar-fill cnn-fill" style="--target-width: 82%;"></div></div><span class="bar-value">82%</span></div>
+                                <div class="bar-row"><span class="bar-model-label">AST</span><div class="bar-track"><div class="bar-fill ast-fill" style="--target-width: 91%;"></div></div><span class="bar-value">91%</span></div>
+                            </div>
+                        </div>
+                        <div class="class-bar-group">
+                            <div class="class-bar-label">😱 Scream_Shout</div>
+                            <div class="bar-pair">
+                                <div class="bar-row"><span class="bar-model-label">CNN</span><div class="bar-track"><div class="bar-fill cnn-fill" style="--target-width: 68%;"></div></div><span class="bar-value">68%</span></div>
+                                <div class="bar-row"><span class="bar-model-label">AST</span><div class="bar-track"><div class="bar-fill ast-fill" style="--target-width: 85%;"></div></div><span class="bar-value">85%</span></div>
+                            </div>
+                        </div>
+                        <div class="class-bar-group">
+                            <div class="class-bar-label">🔫 Gunshot_Explosion</div>
+                            <div class="bar-pair">
+                                <div class="bar-row"><span class="bar-model-label">CNN</span><div class="bar-track"><div class="bar-fill cnn-fill" style="--target-width: 59%;"></div></div><span class="bar-value">59%</span></div>
+                                <div class="bar-row"><span class="bar-model-label">AST</span><div class="bar-track"><div class="bar-fill ast-fill" style="--target-width: 83%;"></div></div><span class="bar-value">83%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cm-section reveal">
+                    <h3 class="table-title">Confusion Matrices</h3>
+                    <div class="cm-grid">
+                        <article class="cm-card glass cnn-accent">
+                            <h4>SoundCNN</h4>
+                            <img src="/images/cnn_cm" alt="CNN Confusion Matrix" id="cnnCmImg" loading="lazy">
+                        </article>
+                        <article class="cm-card glass ast-accent">
+                            <h4>ViTAST</h4>
+                            <img src="/images/ast_cm" alt="AST Confusion Matrix" id="astCmImg" loading="lazy">
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="predict">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">🎯 Inference</span>
+                    <h2>Chạy dự đoán</h2>
+                    <p class="section-desc">Upload một file audio để hai model cùng dự đoán và hiển thị xác suất từng lớp.</p>
+                </div>
+
+                <div class="upload-area glass reveal" id="dropZone">
+                    <input type="file" id="audioInput" accept="audio/*" class="file-input">
+                    <div class="upload-content" id="uploadContent">
+                        <div class="upload-icon-wrapper">
+                            <div class="upload-icon">↑</div>
+                        </div>
+                        <p class="upload-title">Kéo thả audio vào đây</p>
+                        <p class="upload-sub">hoặc <span class="upload-browse">chọn file từ máy</span></p>
+                        <div class="upload-formats">
+                            <span>.wav</span><span>.mp3</span><span>.flac</span><span>.ogg</span><span>.m4a</span>
+                        </div>
+                    </div>
+                    <div class="file-info hidden" id="fileInfo">
+                        <div class="file-icon">♪</div>
+                        <div class="file-details">
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                        <button class="file-remove" id="fileRemove" title="Xóa file">×</button>
+                    </div>
+                </div>
+
+                <div id="audioPlayerWrap" class="hidden">
+                    <audio controls id="audioElement" class="audio-player"></audio>
+                </div>
+
+                <div class="predict-btn-wrap">
+                    <button class="predict-btn hidden" id="predictBtn">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Chạy dự đoán</span>
+                    </button>
+                </div>
+
+                <div id="loading" class="hidden">
+                    <div class="loading-content glass">
+                        <div class="spinner">
+                            <div class="spinner-ring cyan"></div>
+                            <div class="spinner-ring purple"></div>
+                        </div>
+                        <p class="loading-text">Đang xử lý audio...</p>
+                        <div class="loading-steps">
+                            <span class="step active" id="stepPreprocess">Preprocess</span>
+                            <span class="step-arrow">→</span>
+                            <span class="step" id="stepCnn">CNN</span>
+                            <span class="step-arrow">→</span>
+                            <span class="step" id="stepAst">AST</span>
+                            <span class="step-arrow">→</span>
+                            <span class="step" id="stepDone">Done ✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results" class="hidden">
+                    <div class="spectrogram-wrap glass" id="spectrogramWrap">
+                        <h3>🎵 Audio Signal</h3>
+                        <img id="spectrogramImg" alt="Spectrogram">
+                    </div>
+
+                    <div class="results-grid">
+                        <article class="result-card glass cnn-accent" id="cnnResultCard">
+                            <div class="result-header">
+                                <div class="result-model"><span class="model-dot cnn-dot"></span><h3>SoundCNN</h3></div>
+                                <div class="inference-badge" id="cnnInferenceTime">— ms</div>
+                            </div>
+                            <div class="predicted-result" id="cnnPredicted">
+                                <div class="predicted-label">Dự đoán</div>
+                                <div class="predicted-class" id="cnnPredictedClass">—</div>
+                                <div class="predicted-conf" id="cnnPredictedConf">—%</div>
+                            </div>
+                            <div class="confidence-bars" id="cnnConfBars"></div>
+                        </article>
+
+                        <article class="result-card glass ast-accent" id="astResultCard">
+                            <div class="result-header">
+                                <div class="result-model"><span class="model-dot ast-dot"></span><h3>ViTAST</h3></div>
+                                <div class="inference-badge" id="astInferenceTime">— ms</div>
+                            </div>
+                            <div class="predicted-result" id="astPredicted">
+                                <div class="predicted-label">Dự đoán</div>
+                                <div class="predicted-class" id="astPredictedClass">—</div>
+                                <div class="predicted-conf" id="astPredictedConf">—%</div>
+                            </div>
+                            <div class="confidence-bars" id="astConfBars"></div>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="errorMsg" class="hidden">
+                    <div class="error-content glass">
+                        <span class="error-icon">!</span>
+                        <p class="error-text" id="errorText"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>UTE <span class="footer-dot"></span> Deep Learning <span class="footer-dot"></span> Sound Classification Demo</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

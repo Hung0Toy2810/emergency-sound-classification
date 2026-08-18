@@ -1,0 +1,79 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyTorch Checkpoints & Large Model Binaries (>100MB)
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+*.h5
+*.tflite
+!**/models/.gitkeep
+!**/checkpoints/.gitkeep
+
+# Datasets & Large Audio/Video Files
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.aac
+*.wma
+data/raw_segments/
+data/dataset_files/
+data/ffmpeg_binaries/
+bin/
+downloads/
+
+# Sensitive Information & Credentials
+cookies.txt
+*.pem
+*.key
+.env
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Temporary & Output Files
+*.log
+*.tmp
+temp/
