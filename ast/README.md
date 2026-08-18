@@ -1,6 +1,6 @@
-# 🎧 Audio Spectrogram Transformer (AST) Module
+# Audio Spectrogram Transformer (AST) Module
 
-> 👈 **[Quay lại Root README.md](../../README.md)** để xem tổng quan dự án, kiến trúc hệ thống và hướng dẫn cài đặt chung.
+> [Quay lại Root README.md](../../README.md) để xem tổng quan dự án và hướng dẫn cài đặt chung.
 
 ---
 
@@ -10,7 +10,7 @@ Mô hình được tối ưu hóa chạy trên GPU CUDA sử dụng kỹ thuật
 
 ---
 
-## 📂 1. Cấu Trúc Thư Mục Dự Án
+## 1. Cấu Trúc Thư Mục Dự Án
 
 Thư mục dự án được tổ chức chuyên nghiệp và phân chia theo đúng vai trò:
 
@@ -42,7 +42,7 @@ Trans/
 
 ---
 
-## 🛠️ 2. Hướng Dẫn Từng Bước Chạy Dự Án
+## 2. Hướng Dẫn Từng Bước Chạy Dự Án
 
 ### Bước 1: Thiết lập Môi trường & Thư viện
 Dự án yêu cầu cài đặt Python 3.10+ cùng các thư viện deep learning hỗ trợ GPU. Hãy cài đặt các thư viện sau:
@@ -117,22 +117,22 @@ Gunshot_Explosion :   0.31%  [....................]
 
 ---
 
-## ⚡ 3. Các Điểm Nhấn Kỹ Thuật (Phân Tích So Với Bài Báo AST)
+## 3. Các Điểm Nhấn Kỹ Thuật (Phân Tích So Với Bài Báo AST)
 
 Dự án đã bám sát và hiện thực hóa chính xác các kỹ thuật cốt lõi từ bài báo của tác giả Yuan Gong (MIT CSAIL, 2021):
 
-1.  **Chuyển đổi 2D Positional Embedding bằng Bilinear Interpolation:**
+1. **Chuyển đổi 2D Positional Embedding bằng Bilinear Interpolation:**
     Do ảnh ImageNet ($224 \times 224$ chia ô không overlap) chỉ có 196 patches, trong khi âm thanh 10 giây của chúng ta tạo ra $12 \times 99 = 1188$ patches. Mô hình đã tự động tính toán lưới 2D và áp dụng nội suy song tuyến để co dãn positional embedding của ViT sang khớp với kích thước âm thanh mà không làm mất thông tin vị trí đã học.
-2.  **Trung bình hóa trọng số kênh đầu vào:**
+2. **Trung bình hóa trọng số kênh đầu vào:**
     Mô hình ViT được thiết kế nhận ảnh RGB 3 kênh. Dự án đã thích nghi sang âm thanh 1 kênh bằng cách tính trung bình cộng trọng số của 3 kênh đầu vào để gán cho kênh đơn của phổ âm thanh.
-3.  **Data Augmentation (SpecAugment):**
+3. **Data Augmentation (SpecAugment):**
     Tích hợp trực tiếp bộ lọc che ngẫu nhiên dải tần số (Frequency Masking) và dải thời gian (Time Masking) ngay trong luồng huấn luyện để chống Overfitting hiệu quả.
-4.  **Cơ chế Self-Attention tự nhiên cho dữ liệu biến thiên:**
+4. **Cơ chế Self-Attention tự nhiên cho dữ liệu biến thiên:**
     Transformer xử lý các patch dưới dạng chuỗi đầu vào tuyến tính, giúp hệ thống có khả năng nhận diện các âm thanh có độ dài biến thiên (từ 1 giây đến 10 giây) một cách tự nhiên mà không cần thiết kế lại cấu trúc mạng.
 
 ---
 
-## 📊 4. Kết Quả Huấn Luyện (Huấn luyện hoàn tất Epoch 10/10)
+## 4. Kết Quả Huấn Luyện (Huấn luyện hoàn tất Epoch 10/10)
 
 Độ chính xác trung bình toàn hệ thống đạt **mAP = 92.02%** trên tập kiểm thử độc lập (Test Set), các chỉ số chi tiết của mô hình:
 

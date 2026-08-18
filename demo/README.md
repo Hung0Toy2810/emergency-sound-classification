@@ -1,6 +1,6 @@
-# 🌐 Sound Classification Interactive Web Demo
+# Sound Classification Interactive Web Demo
 
-> 👈 **[Quay lại Root README.md](../../README.md)** để xem tổng quan dự án, kiến trúc hệ thống và hướng dẫn cài đặt chung.
+> [Quay lại Root README.md](../../README.md) để xem tổng quan dự án và hướng dẫn cài đặt chung.
 
 ---
 
