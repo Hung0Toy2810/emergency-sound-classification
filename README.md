@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎧 UrbanSafety-AST: Real-Time Urban Danger Event Detection via Audio Spectrogram Transformer & Custom CNN
+# 🎧 Emergency Sound Classification: CNN vs. Audio Spectrogram Transformer
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch 2.1](https://img.shields.io/badge/PyTorch-2.1%2B-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
@@ -21,7 +21,7 @@
 
 ## 💡 Overview
 
-**UrbanSafety-AST** is a state-of-the-art deep learning system engineered to automatically detect and classify critical urban safety threat events from audio feeds. Built upon the **Audio Spectrogram Transformer (AST)** paper (*Gong et al., MIT CSAIL, 2021*), this project adapts Vision Transformer (ViT) architectures pre-trained on ImageNet to 1-channel log-Mel Spectrogram representations of acoustic signals.
+**Emergency Sound Classification: CNN vs. Audio Spectrogram Transformer** is a state-of-the-art deep learning system engineered to automatically detect and classify critical urban safety threat events from audio feeds. Built upon the **Audio Spectrogram Transformer (AST)** paper (*Gong et al., MIT CSAIL, 2021*), this project adapts Vision Transformer (ViT) architectures pre-trained on ImageNet to 1-channel log-Mel Spectrogram representations of acoustic signals.
 
 The system targets **4 hazardous urban audio categories**:
 - 🚨 **Siren** (*Emergency vehicle alerts*)
@@ -126,7 +126,7 @@ To combat overfitting on limited acoustic datasets, the training loop integrates
 ## 📂 Repository Directory Structure
 
 ```text
-UrbanSafety-AST/
+Emergency Sound Classification: CNN vs. Audio Spectrogram Transformer/
 ├── ast/                                # Audio Spectrogram Transformer Module
 │   ├── src/                            # Core PyTorch source code
 │   │   ├── dataset.py                  # PyTorch AudioDataset & SpecAugment logic
@@ -196,8 +196,8 @@ Open your browser at `http://localhost:5000` to interact with the UI:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/UrbanSafety-AST.git
-cd UrbanSafety-AST
+git clone https://github.com/YOUR_USERNAME/Emergency-Sound-Classification.git
+cd Emergency-Sound-Classification
 
 # Create virtual environment
 python -m venv venv
