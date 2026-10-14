@@ -77,3 +77,8 @@ venv.bak/
 *.log
 *.tmp
 temp/
+
+# Retained SoundCNN checkpoint (18.3 MiB)
+!cnn/models/custom_cnn_best.pth
+
+.pytest_cache/

@@ -10,23 +10,31 @@ The system classifies audio into 4 dangerous event categories:
 
 ---
 
-## Performance Summary
+## Saved evaluation results
 
-Evaluated on an independent test set of 447 audio files:
+The supplied SoundCNN checkpoint has four output classes and loads directly
+into the web demo. Its confusion matrix covers 447 audio clips. Recomputing
+metrics from that matrix gives accuracy 64.21% and macro F1 0.6588, matching
+the checkpoint accuracy and the rounded classification report.
 
-| Model | mAP (%) | Macro F1 | Train Loss | Val Loss |
-| :--- | :---: | :---: | :---: | :---: |
-| **Audio Spectrogram Transformer (AST)** | **92.02%** | **0.8469** | 0.0353 | 0.2343 |
-| **Custom 2D CNN Baseline** | 81.50% | 0.7620 | 0.1204 | 0.4120 |
+| Model | Accuracy | Macro F1 | mAP | Source |
+| :--- | ---: | ---: | ---: | :--- |
+| SoundCNN | 64.21% | 0.6588 | — | [CNN report and confusion matrix](cnn/evaluation_report/) |
+| Audio Spectrogram Transformer | — | 0.8469 | 92.04% | [AST evaluation report](ast/plots_and_metrics/metrics_report.txt) |
 
-### Per-Class Average Precision (AST Model)
+The CNN report uses a single primary label per clip; AST F1/mAP use multi-label
+targets. The training scripts also use the split named `test` for model
+selection. Treat these as development evaluation results, not independent
+held-out scores or a controlled comparison of the two architectures.
 
-| Sound Event | Average Precision (AP) |
-| :--- | :---: |
-| Siren | **98.57%** |
-| Scream / Shout | **92.00%** |
-| Gunshot / Explosion | **89.71%** |
-| Crash / Collision | **87.81%** |
+### Per-class average precision (AST)
+
+| Sound event | AP |
+| :--- | ---: |
+| Siren | 98.57% |
+| Scream / Shout | 91.99% |
+| Gunshot / Explosion | 89.77% |
+| Crash / Collision | 87.83% |
 
 ---
 
@@ -80,7 +88,7 @@ Flask Web UI (Side-by-side comparison)
 │   ├── evaluate.py             # Evaluation script for PR curves & metrics
 │   ├── predict.py              # CLI script for single-file inference
 │   └── run.py                  # Runner for preprocessing and training
-├── cnn/                        # Custom 2D CNN baseline implementation
+├── cnn/                        # Four-class SoundCNN training, checkpoint and report
 ├── data/                       # Data crawling, scraping, and metadata conversion scripts
 ├── demo/                       # Flask web application for interactive inference
 ├── docs/                       # Project report and documentation
@@ -128,6 +136,13 @@ Resume training from checkpoint if interrupted:
 python ast/run.py --epochs 10 --batch_size 16 --duration 10 --resume
 ```
 
+### SoundCNN training and evaluation
+
+See [cnn/README.md](cnn/README.md) for the matching four-class training source,
+preprocessing, retained checkpoint and evaluation report. The previous
+UrbanSound8K/GrowableCNN files have been replaced by the supplied SoundCNN
+project.
+
 ### Evaluation & Inference
 
 Evaluate test set performance:
@@ -155,7 +170,10 @@ Open `http://localhost:5000` in your browser to test live inference and compare 
 Due to GitHub file size limits, the pre-trained weights file (`best_model.pth`, ~1.03 GB) is hosted externally:
 - **Download Checkpoint**: [Google Drive Link](https://drive.google.com/file/d/1bGMZYr1OWizGqQ8wR3eye2rzB9Kv8vCc/view?usp=drive_link)
 
-Place `best_model.pth` inside `ast/model_checkpoints/` and `demo/models/` before running inference offline.
+Place `best_model.pth` inside `ast/model_checkpoints/` and `demo/models/` before
+running AST inference offline. The SoundCNN checkpoint is included at
+`cnn/models/custom_cnn_best.pth`; the demo loads it automatically if no local
+CNN checkpoint is present in `demo/models/`.
 
 ---
 
@@ -175,8 +193,6 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 This repository preserves the commit history and MIT license of the shared
 [Emergency Sound Classification project](https://github.com/giabao1176/Emergency-Sound-Classification).
 
-The AST evaluation report records macro F1 of 0.8469. The current training code
-uses the split named `test` as validation data for model selection, so this is
-not an independent held-out test score. The README and demo currently report
-different CNN scores; a controlled CNN–AST comparison needs a consistent
-validation/test protocol.
+The supplied four-class SoundCNN source, checkpoint and evaluation artifacts
+replace the unrelated UrbanSound8K/GrowableCNN training code in `cnn/`.
+See the saved evaluation section above for scoring conventions and limits.

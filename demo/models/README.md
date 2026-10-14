@@ -1,50 +1,20 @@
-# Model Files
+# Demo checkpoints
 
-This directory contains the trained model weights for the Sound Classification Demo.
+## SoundCNN
 
-## Required Models
+The retained four-class checkpoint is tracked at
+`../../cnn/models/custom_cnn_best.pth`. The demo uses it automatically unless
+`custom_cnn_best.pth` is placed in this directory as a local override.
 
-Due to GitHub file size limitations, model files are not included in this repository.
+The model has five convolution blocks with widths 32, 64, 128, 256 and 512,
+uses 224 x 224 RGB mel images, and returns the class order stored in the
+checkpoint. See [the CNN documentation](../../cnn/README.md).
 
-### Expected Files:
+## Audio Spectrogram Transformer
 
-1. **best_model.pth** (~988 MB)
-   - Audio Spectrogram Transformer (AST) model
-   - Fine-tuned for 4-class sound classification
+Place `best_model.pth` in this directory. It is downloaded separately using
+the link in the [main README](../../README.md#pre-trained-checkpoints).
 
-2. **custom_cnn_best.pth** (~19 MB)
-   - Custom CNN model
-   - 5-layer convolutional architecture
-
-## Download Instructions
-
-Please download the model files from one of the following sources:
-
-- [Google Drive Link] - *Add your link here*
-- [OneDrive Link] - *Add your link here*
-- [Hugging Face] - *Add your link here*
-
-## Placement
-
-After downloading, place the model files in this directory:
-```
-models/
-├── best_model.pth
-├── custom_cnn_best.pth
-└── README.md
-```
-
-## Training Your Own Models
-
-If you want to train your own models, please refer to the training scripts in the training documentation.
-
-### CNN Model Architecture:
-- Input: Mel-spectrogram (224×224)
-- Layers: 5 Conv blocks (32→64→128→256→512)
-- Output: 4 classes
-
-### AST Model:
-- Base: MIT/ast-finetuned-audioset-10-10-0.4593
-- Fine-tuned on ESC-50 subset
-- Input: Log-Mel spectrogram (128×T)
-- Output: 4 classes (multi-label)
+The implementation adapts `google/vit-base-patch16-224` pretrained on ImageNet
+to single-channel log-Mel spectrograms. It uses four multi-label outputs:
+Crash_Collision, Siren, Scream_Shout, Gunshot_Explosion.

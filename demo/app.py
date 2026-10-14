@@ -219,13 +219,13 @@ def metrics():
     return jsonify({
         "cnn": {
             "name": "SoundCNN",
-            "architecture": "5-layer CNN (32→64→128→256→512)",
+            "architecture": "5-block SoundCNN (32→64→128→256→512)",
             "params": "4.78M",
-            "size_mb": "18.2",
-            "accuracy": 64.0,
-            "macro_precision": 66.0,
-            "macro_recall": 66.0,
-            "macro_f1": 66.0,
+            "size_mb": "18.3",
+            "accuracy": 64.21,
+            "macro_precision": 65.78,
+            "macro_recall": 66.14,
+            "macro_f1": 65.88,
             "per_class": {
                 "Crash_Collision":    {"precision": 57, "recall": 53, "f1": 55},
                 "Gunshot_Explosion":  {"precision": 58, "recall": 61, "f1": 59},

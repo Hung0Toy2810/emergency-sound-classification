@@ -8,6 +8,10 @@ import torch
 
 # ── Đường dẫn project ────────────────────────────────────────────────
 CNN_CHECKPOINT = os.path.join(os.path.dirname(__file__), "models", "custom_cnn_best.pth")
+if not os.path.isfile(CNN_CHECKPOINT):
+    CNN_CHECKPOINT = os.path.join(
+        os.path.dirname(__file__), "..", "cnn", "models", "custom_cnn_best.pth"
+    )
 AST_CHECKPOINT = os.path.join(os.path.dirname(__file__), "models", "best_model.pth")
 
 
