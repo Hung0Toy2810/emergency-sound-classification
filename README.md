@@ -96,8 +96,8 @@ Flask Web UI (Side-by-side comparison)
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/giabao1176/Emergency-Sound-Classification.git
-cd Emergency-Sound-Classification
+git clone https://github.com/Hung0Toy2810/emergency-sound-classification.git
+cd emergency-sound-classification
 ```
 
 2. Create virtual environment and install dependencies:
@@ -169,3 +169,14 @@ Place `best_model.pth` inside `ast/model_checkpoints/` and `demo/models/` before
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Repository history
+
+This repository preserves the commit history and MIT license of the shared
+[Emergency Sound Classification project](https://github.com/giabao1176/Emergency-Sound-Classification).
+
+The AST evaluation report records macro F1 of 0.8469. The current training code
+uses the split named `test` as validation data for model selection, so this is
+not an independent held-out test score. The README and demo currently report
+different CNN scores; a controlled CNN–AST comparison needs a consistent
+validation/test protocol.
