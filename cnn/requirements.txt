@@ -1,0 +1,9 @@
+numpy
+librosa
+soundfile
+matplotlib
+scikit-learn
+tqdm
+torch
+torchvision
+Pillow

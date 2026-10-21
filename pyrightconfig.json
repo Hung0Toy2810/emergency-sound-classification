@@ -1,0 +1,12 @@
+{
+  "include": ["ast", "cnn", "data", "demo"],
+  "exclude": ["**/.venv", "**/__pycache__"],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "standard",
+  "executionEnvironments": [
+    {"root": "ast", "extraPaths": ["ast", "data"]},
+    {"root": "demo", "extraPaths": ["demo"]},
+    {"root": "cnn", "extraPaths": ["cnn"]},
+    {"root": "data"}
+  ]
+}

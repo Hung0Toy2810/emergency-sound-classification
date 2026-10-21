@@ -1,0 +1,21 @@
+==================================================
+             AST EVALUATION REPORT              
+==================================================
+
+Unified Accuracy       : 83.67%
+Mean Average Precision : 92.04%
+Macro F1-Score         : 84.69%
+Micro F1-Score         : 84.04%
+Macro Precision        : 85.94%
+Micro Precision        : 84.62%
+Macro Recall           : 84.03%
+Micro Recall           : 83.48%
+Macro ROC AUC          : 0.9622
+
+Class-Wise Average Precision (AP):
+--------------------------------------------------
+Crash_Collision    : 87.83%
+Siren              : 98.57%
+Scream_Shout       : 91.99%
+Gunshot_Explosion  : 89.77%
+==================================================
